@@ -19,7 +19,7 @@ describe("FundMe", async function () {
     })
     describe("constructor", async function () {
         it("Sets the aggregator addresses correctly", async function () {
-            const response = await fundMe.priceFeed()
+            const response = await fundMe.s_priceFeed()
             assert.equal(response, mockV3Aggregator.address)
         })
     })
@@ -34,7 +34,7 @@ describe("FundMe", async function () {
             const response = await fundMe.s_addressToAmountFunded(deployer)
             assert(response.toString(), sendValue.toString())
         })
-        it("Adds funder to funders array", async function () {
+        it("Adds funder to s_funders array", async function () {
             fundMe.fund({ value: sendValue })
             const response = await fundMe.s_funders(0)
             assert(response.toString(), deployer.toString())
@@ -72,7 +72,7 @@ describe("FundMe", async function () {
                 endingFundMeBalance.add(gastCost).toString()
             )
 
-            it("Allows us to withdraw with multiple funders", async function () {
+            it("Allows us to withdraw with multiple s_funders", async function () {
                 const accounts = await ethers.getSigners()
                 for (let i = 1; i < 6; i++) {
                     const fundMeConnectedContract = await fundMe.connect(
@@ -101,7 +101,7 @@ describe("FundMe", async function () {
                     endingFundMeBalance.add(gastCost).toString()
                 )
 
-                expect(fundMe.s_funders(0)).to.be.reverted
+                expect(fundMe.s_s_funders(0)).to.be.reverted
 
                 for (let i = 1; i < 6; i++) {
                     assert(
